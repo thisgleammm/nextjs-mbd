@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model DetailPembayaran {
+  kodedetail    String @id @db.VarChar(5)
+  kodependapatan String
+  kodepembayaran String
+  keterangan    String @db.VarChar(50)
+  nominal       Int
+
+  pendapatan    Pendapatan @relation(fields: [kodependapatan], references: [kodependapatan])
+  pembayaran    Pembayaran @relation(fields: [kodepembayaran], references: [kodepembayaran])
+}
+
+model Pembayaran {
+  kodepembayaran String @id @db.VarChar(5)
+  nip            String
+  bulangaji      String @db.VarChar(25)
+  totalpenerimaan Int
+  totalpotongan  Int
+
+  pegawai        Pegawai @relation(fields: [nip], references: [nip])
+  detailPembayaran DetailPembayaran[]
+}
+
+model Pendapatan {
+  kodependapatan String @id @db.VarChar(5)
+  jenispendapatan String?
+
+  detailPembayaran DetailPembayaran[]
+}
+
+model Pegawai {
+  nip            String @id @db.Char(10)
+  fullname       String?
+  nokpj          String @db.Char(7)
+  nonpwp         String @db.Char(16)
+  pangkat        String @db.VarChar(50)
+  jabatan        String @db.VarChar(25)
+  statuspegawai  String @db.VarChar(10)
+  unitkerja      String? @db.Char(6)
+
+  pembayaran     Pembayaran[]
+}
