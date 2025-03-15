@@ -8,3 +8,12 @@ export const getPegawai = async () => {
     throw new Error("Failed to fetch pegawai data");
   }
 };
+
+export const getPembayaran = async () => {
+  try {
+    const pembayaran = await prisma.pembayaran.findMany();
+    return pembayaran;
+  } catch (error) {
+    throw new Error("Failed to fetch pembayaran data");
+  }
+};

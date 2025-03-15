@@ -15,41 +15,34 @@ import { Chip, ChipProps } from "@heroui/chip";
 import { useAsyncList } from "@react-stately/data";
 import { Spinner } from "@heroui/spinner";
 
-interface Pegawai {
+interface Pembayaran {
+  kodepembayaran: string;
   nip: string;
-  fullname: string | null;
-  nokpj: string;
-  nonpwp: string;
-  pangkat: string;
-  jabatan: string;
-  statuspegawai: string;
-  unitkerja: string | null;
+  bulangaji: string;
+  totalpenerimaan: number;
+  totalpotongan: number;
 }
 
-interface PegawaiTableProps {
-  pegawai: Pegawai[];
+interface PembayaranTableProps {
+  pembayaran: Pembayaran[];
 }
 
-export default function PegawaiTable({ pegawai }: PegawaiTableProps) {
-  const statusColorMap: Record<string, ChipProps["color"]> = {
-    Aktif: "success",
-    "Non-Aktif": "danger",
-  };
+export default function PembayaranTable({ pembayaran }: PembayaranTableProps) {
   const [isLoading, setIsLoading] = React.useState(true);
 
   let list = useAsyncList({
     async load({ signal }) {
       setIsLoading(false);
       return {
-        items: pegawai,
+        items: pembayaran,
       };
     },
     async sort({ items, sortDescriptor }) {
       return {
-        items: (items as Pegawai[]).sort((a: Pegawai, b: Pegawai) => {
+        items: (items as Pembayaran[]).sort((a: Pembayaran, b: Pembayaran) => {
           // Berikan tipe eksplisit di sini
-          let first = a[sortDescriptor.column as keyof Pegawai]; // Gunakan keyof Pegawai
-          let second = b[sortDescriptor.column as keyof Pegawai]; // Gunakan keyof Pegawai
+          let first = a[sortDescriptor.column as keyof Pembayaran]; // Gunakan keyof Pegawai
+          let second = b[sortDescriptor.column as keyof Pembayaran]; // Gunakan keyof Pegawai
           let cmp =
             (parseInt(first as string) || first || "") <
             (parseInt(second as string) || second || "")
@@ -68,54 +61,40 @@ export default function PegawaiTable({ pegawai }: PegawaiTableProps) {
 
   return (
     <Table
-      aria-label="Tabel Data Pegawai"
+      aria-label="Tabel Data Pembayaran"
       sortDescriptor={list.sortDescriptor}
       onSortChange={list.sort}
     >
       <TableHeader>
-        <TableColumn key="nip" allowsSorting>
-          NIP
+        <TableColumn key="kodepembayaran" allowsSorting>
+          Kode Pembayaran
         </TableColumn>
         <TableColumn key="fullname" allowsSorting>
-          Nama Lengkap
+          Nama Pegawai
         </TableColumn>
-        <TableColumn>Jabatan dan Pangkat</TableColumn>
-        <TableColumn key="statuspegawai" allowsSorting>
-          Status
+        <TableColumn>Bulan Gaji</TableColumn>
+        <TableColumn key="totalpenerimaan" allowsSorting>
+          Total Penerimaan
+        </TableColumn>
+        <TableColumn key="totalpotongan" allowsSorting>
+          Total Potongan
         </TableColumn>
         <TableColumn>Aksi</TableColumn>
       </TableHeader>
       <TableBody
         isLoading={isLoading}
-        items={list.items as Pegawai[]}
+        items={list.items as Pembayaran[]}
         loadingContent={<Spinner label="Loading..." />}
       >
         {(
-          pegawai: Pegawai // Berikan tipe eksplisit di sini
+          pembayaran: Pembayaran // Berikan tipe eksplisit di sini
         ) => (
-          <TableRow key={pegawai.nip}>
-            <TableCell>{pegawai.nip}</TableCell>
-            <TableCell>{pegawai.fullname}</TableCell>
-            <TableCell>
-              <div className="flex flex-col">
-                <p className="text-bold text-sm capitalize">
-                  {pegawai.jabatan}
-                </p>
-                <p className="text-bold text-sm capitalize text-default-400">
-                  {pegawai.pangkat}
-                </p>
-              </div>
-            </TableCell>
-            <TableCell>
-              <Chip
-                className="capitalize"
-                color={statusColorMap[pegawai.statuspegawai]}
-                size="sm"
-                variant="flat"
-              >
-                {pegawai.statuspegawai}
-              </Chip>
-            </TableCell>
+          <TableRow key={pembayaran.kodepembayaran}>
+            <TableCell>{pembayaran.kodepembayaran}</TableCell>
+            <TableCell>{pembayaran.nip}</TableCell>
+            <TableCell>{pembayaran.bulangaji}</TableCell>
+            <TableCell>{pembayaran.totalpenerimaan}</TableCell>
+            <TableCell>{pembayaran.totalpotongan}</TableCell>
             <TableCell>
               <div className="relative flex items-center gap-2">
                 <Tooltip content="Edit user">
