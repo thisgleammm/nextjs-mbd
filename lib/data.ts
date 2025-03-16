@@ -9,6 +9,17 @@ export const getPegawai = async () => {
   }
 };
 
+export const getPegawaiById = async (id: string) => {
+  try {
+    const pegawai = await prisma.pegawai.findUnique({
+      where: { nip: id },
+    });
+    return pegawai;
+  } catch (error) {
+    throw new Error("Failed to fetch pegawai data");
+  }
+};
+
 export const getPembayaran = async () => {
   try {
     const pembayaran = await prisma.pembayaran.findMany({

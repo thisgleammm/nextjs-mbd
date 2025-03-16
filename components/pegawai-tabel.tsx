@@ -10,22 +10,17 @@ import {
   TableCell,
 } from "@heroui/table";
 import { Tooltip } from "@heroui/tooltip";
-import { EditIcon, DeleteIcon } from "@/components/icons";
+import { DeleteIcon, PlusIcon, SearchIcon } from "@/components/icons";
 import { Chip, ChipProps } from "@heroui/chip";
 import { useAsyncList } from "@react-stately/data";
 import { Spinner } from "@heroui/spinner";
 import SplitText from "@/components/splittext";
-
-interface Pegawai {
-  nip: string;
-  fullname: string | null;
-  nokpj: string;
-  nonpwp: string;
-  pangkat: string;
-  jabatan: string;
-  statuspegawai: string;
-  unitkerja: string | null;
-}
+import { Button } from "@heroui/button";
+import { Input } from "@heroui/input";
+import { Link } from "@heroui/link";
+import { DeleteButton, EditButton } from "@/components/buttons";
+import { useRouter } from "next/navigation";
+import { Pegawai } from "@prisma/client";
 
 interface PegawaiTableProps {
   pegawai: Pegawai[];
@@ -72,13 +67,40 @@ export default function PegawaiTable({ pegawai }: PegawaiTableProps) {
       <div className="w-full text-center mb-8">
         <SplitText
           text="Tabel Pegawai"
-          className="text-6xl font-semibold"
+          className="text-5xl font-semibold"
           delay={20}
           animationFrom={{ opacity: 0, transform: "translate3d(0,50px,0)" }}
           animationTo={{ opacity: 1, transform: "translate3d(0,0,0)" }}
           threshold={0.2}
           rootMargin="-50px"
         />
+        <div className="mt-8 flex justify-between items-center">
+          <div className="flex-1 mr-4">
+            {/* <Input
+              isClearable
+              classNames={{
+                base: "w-full sm:max-w-[44%]",
+                inputWrapper: "border-1",
+              }}
+              placeholder="Search by name..."
+              size="sm"
+              startContent={<SearchIcon className="text-default-300" />}
+              value={filterValue}
+              variant="bordered"
+              onClear={() => setFilterValue("")}
+              onValueChange={onSearchChange}
+            /> */}
+          </div>
+          <Button
+            as={Link}
+            className="bg-foreground text-background"
+            endContent={<PlusIcon />}
+            size="sm"
+            href="pegawai/create"
+          >
+            Tambah Data
+          </Button>
+        </div>
       </div>
 
       <Table
@@ -132,16 +154,8 @@ export default function PegawaiTable({ pegawai }: PegawaiTableProps) {
               </TableCell>
               <TableCell>
                 <div className="relative flex items-center gap-2">
-                  <Tooltip content="Edit user">
-                    <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                      <EditIcon />
-                    </span>
-                  </Tooltip>
-                  <Tooltip color="danger" content="Delete user">
-                    <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                      <DeleteIcon />
-                    </span>
-                  </Tooltip>
+                  <EditButton id={pegawai.nip} />
+                  <DeleteButton id={pegawai.nip} />
                 </div>
               </TableCell>
             </TableRow>

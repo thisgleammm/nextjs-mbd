@@ -24,51 +24,11 @@ export default function CreateForm() {
     router.push("/pegawai");
   };
 
-  // `const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {`
-  //   e.preventDefault();
-
-  //   const data = Object.fromEntries(new FormData(e.currentTarget));
-
-  //   // Validasi
-  //   const newErrors: Record<string, string> = {};
-  //   if (!data.nip) {
-  //     newErrors.nip = "NIP is required";
-  //   }
-  //   if (!data.fullname) {
-  //     newErrors.fullname = "Nama Lengkap is required";
-  //   }
-  //   if (!data.nokpj) {
-  //     newErrors.nokpj = "No KPJ is required";
-  //   }
-  //   if (!data.nonpwp) {
-  //     newErrors.nonpwp = "No NPWP is required";
-  //   }
-  //   if (!data.pangkat) {
-  //     newErrors.pangkat = "Pangkat is required";
-  //   }
-  //   if (!data.jabatan) {
-  //     newErrors.jabatan = "Jabatan is required";
-  //   }
-
-  //   if (!data.statuspegawai) {
-  //     newErrors.statuspegawai = "Status Pegawai is required";
-  //   }
-  //   if (!data.unitkerja) {
-  //     newErrors.unitkerja = "Unit Kerja is required";
-  //   }
-
-  //   // Jika ada error, set state errors
-  //   if (Object.keys(newErrors).length > 0) {
-  //     setErrors(newErrors);
-  //     return;
-  //   }
-
-  //   // Reset errors jika validasi berhasil
-  //   setErrors({});
-
-  //   // Logika submit form (misalnya, kirim data ke API)
-  //   console.log("Form data:", data);
-  // };
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Hapus karakter non-angka dari nilai input
+    const value = e.target.value.replace(/\D/g, ""); // \D berarti non-digit
+    e.target.value = value; // Set nilai input ke nilai yang sudah difilter
+  };
 
   return (
     <Form
@@ -76,12 +36,14 @@ export default function CreateForm() {
       validationErrors={errors}
       action={formAction}
     >
-      <NumberInput
+      <Input
         isRequired
         label="NIP"
         labelPlacement="outside"
         name="nip"
         placeholder="Masukkan NIP"
+        type="number" // Gunakan type="number" untuk input angka
+        onChange={handleInputChange} // Tambahkan event handler
       />
       <Input
         isRequired
@@ -90,19 +52,23 @@ export default function CreateForm() {
         name="fullname"
         placeholder="Masukkan Nama Panjang"
       />
-      <NumberInput
+      <Input
         isRequired
         label="No KPJ"
         labelPlacement="outside"
         name="nokpj"
         placeholder="Masukkan No KPJ"
+        type="number" // Gunakan type="number" untuk input angka
+        onChange={handleInputChange} // Tambahkan event handler
       />
-      <NumberInput
+      <Input
         isRequired
         label="No NPWP"
         labelPlacement="outside"
         name="nonpwp"
         placeholder="Masukkan No NPWP"
+        type="number" // Gunakan type="number" untuk input angka
+        onChange={handleInputChange} // Tambahkan event handler
       />
       <Input
         isRequired

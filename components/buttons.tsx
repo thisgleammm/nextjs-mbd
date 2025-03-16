@@ -33,12 +33,17 @@ export const EditButton = ({ id }: { id: string }) => {
 };
 
 export const DeleteButton = ({ id }: { id: string }) => {
-  const DeleteContactWithId = deletePegawai.bind(null, id);
+  const DeletePegawaiWithId = deletePegawai.bind(null, id);
   return (
-    <form action={DeleteContactWithId}>
-      <button className="rounded-sm border p-1 hover:bg-gray-100">
-        <DeleteIcon size={20} />
-      </button>
+    <form action={DeletePegawaiWithId}>
+      <Tooltip color="danger" content="Delete Pegawai">
+        <button
+          type="submit"
+          className="text-lg text-danger cursor-pointer active:opacity-50"
+        >
+          <DeleteIcon />
+        </button>
+      </Tooltip>
     </form>
   );
 };
@@ -48,21 +53,22 @@ export const SubmitButton = ({
   onSubmitSuccess,
 }: {
   label: string;
-  onSubmitSuccess?: () => void; // Callback setelah submit berhasil
+  onSubmitSuccess?: () => void;
 }) => {
   const { pending } = useFormStatus();
 
-  const className = clsx("bg-foreground text-background w-full text-center", {
-    "opacity-50 cursor-progress": pending,
-  });
+  const handleClick = () => {
+    if (onSubmitSuccess) {
+      onSubmitSuccess(); // Panggil callback setelah submit
+    }
+  };
 
   return (
     <Button
       type="submit"
       variant="flat"
       disabled={pending}
-      className={className}
-      onClick={onSubmitSuccess} // Panggil callback setelah submit
+      onClick={handleClick} // Tambahkan onClick
     >
       {label === "save"
         ? pending

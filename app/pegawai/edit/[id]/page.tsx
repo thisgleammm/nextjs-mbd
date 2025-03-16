@@ -1,8 +1,29 @@
 import React from "react";
 import SplitText from "@/components/splittext";
 import UpdateForm from "@/components/ubahpegawai";
+import { auth } from "@/auth";
+import { redirect, notFound } from "next/navigation";
+import { getPegawaiById } from "@/lib/data";
 
-export default function UpdatePegawaiPage() {
+export default async function UpdatePegawaiPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const { id } = await params;
+
+  // Ambil data pegawai
+  const pegawai = await getPegawaiById(id);
+  if (!pegawai) {
+    notFound();
+  }
+
+  // Periksa session
+  const session = await auth();
+  if (!session) {
+    redirect("/");
+  }
+
   return (
     <div className="flex flex-col items-center w-full">
       <div className="w-full text-center mb-8">
@@ -17,7 +38,7 @@ export default function UpdatePegawaiPage() {
         />
       </div>
       <div className="flex justify-center w-full">
-        <UpdateForm />
+        <UpdateForm pegawai={pegawai} />
       </div>
     </div>
   );

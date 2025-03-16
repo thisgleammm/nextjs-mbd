@@ -12,7 +12,7 @@ export default async function SignIn() {
           await signOut({ redirectTo: "/" });
         }}
       >
-        <Button color="primary" type="submit" variant="flat">
+        <Button className="ml-4" color="primary" type="submit" variant="flat">
           Sign Out
         </Button>
       </form>

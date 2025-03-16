@@ -5,14 +5,13 @@ import SignOutButton from "@/components/signout";
 
 export default async function SignIn() {
   const session = await auth();
-  console.log(session);
   const user = session?.user;
   return user ? (
     <>
       <User
         avatarProps={{
           isBordered: true,
-          className: "transition-transform",
+          className: "ml-4 mr-2 transition-transform",
           color: "secondary",
           src: user.image || undefined,
           size: "sm",
@@ -29,7 +28,7 @@ export default async function SignIn() {
           await signIn("google", { redirectTo: "/dashboard" });
         }}
       >
-        <Button color="primary" type="submit" variant="flat">
+        <Button className="ml-4" color="primary" type="submit" variant="flat">
           Sign In
         </Button>
       </form>

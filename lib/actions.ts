@@ -16,6 +16,17 @@ const PegawaiSchema = z.object({
   unitkerja: z.string(),
 });
 
+const UpdatePegawaiSchema = z.object({
+  nip: z.string().optional(),
+  fullname: z.string(),
+  nokpj: z.string(),
+  nonpwp: z.string(),
+  pangkat: z.string(),
+  jabatan: z.string(),
+  statuspegawai: z.string(),
+  unitkerja: z.string(),
+});
+
 export const savePegawai = async (prevState: any, formData: FormData) => {
   console.log("FormData received:", Object.fromEntries(formData.entries()));
 
@@ -50,7 +61,6 @@ export const savePegawai = async (prevState: any, formData: FormData) => {
       },
     });
     console.log("Pegawai created successfully");
-    return { ...prevState, message: "Pegawai created successfully" };
   } catch (error) {
     console.error("Failed to create pegawai:", error);
   }
@@ -70,7 +80,7 @@ export const updatePegawai = async (
 
   console.log("FormData received:", Object.fromEntries(formData.entries()));
 
-  const validatedFields = PegawaiSchema.safeParse(
+  const validatedFields = UpdatePegawaiSchema.safeParse(
     Object.fromEntries(formData.entries())
   );
 
@@ -91,7 +101,6 @@ export const updatePegawai = async (
     await prisma.pegawai.update({
       where: { nip: id },
       data: {
-        nip: validatedFields.data.nip,
         fullname: validatedFields.data.fullname,
         nokpj: validatedFields.data.nokpj,
         nonpwp: validatedFields.data.nonpwp,
@@ -101,12 +110,11 @@ export const updatePegawai = async (
         unitkerja: validatedFields.data.unitkerja,
       },
     });
+
     console.log("Pegawai updated successfully");
-    return { ...prevState, message: "Pegawai updated successfully" };
   } catch (error) {
     console.error("Failed to update pegawai:", error);
   }
-
   revalidatePath("/pegawai");
   redirect("/pegawai");
 };
@@ -121,10 +129,10 @@ export const deletePegawai = async (id: string) => {
       where: { nip: id },
     });
     console.log("Pegawai deleted successfully");
-    return { message: "Pegawai deleted successfully" };
   } catch (error) {
     console.error("Failed to delete pegawai:", error);
   }
 
   revalidatePath("/pegawai");
+  redirect("/pegawai");
 };

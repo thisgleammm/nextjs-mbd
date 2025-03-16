@@ -10,10 +10,14 @@ import {
   TableCell,
 } from "@heroui/table";
 import { Tooltip } from "@heroui/tooltip";
-import { EditIcon, DeleteIcon } from "@/components/icons";
+import { EditIcon, DeleteIcon, PlusIcon, SearchIcon } from "@/components/icons";
 import { useAsyncList } from "@react-stately/data";
 import { Spinner } from "@heroui/spinner";
 import SplitText from "@/components/splittext";
+import { formatCurrency } from "@/lib/utils";
+import { Button } from "@heroui/button";
+import { Input } from "@heroui/input";
+import { Link } from "@heroui/link";
 
 interface Pembayaran {
   kodepembayaran: string;
@@ -65,13 +69,40 @@ export default function PembayaranTable({ pembayaran }: PembayaranTableProps) {
       <div className="w-full text-center mb-8">
         <SplitText
           text="Tabel Pembayaran"
-          className="text-6xl font-semibold"
+          className="text-5xl font-semibold"
           delay={20}
           animationFrom={{ opacity: 0, transform: "translate3d(0,50px,0)" }}
           animationTo={{ opacity: 1, transform: "translate3d(0,0,0)" }}
           threshold={0.2}
           rootMargin="-50px"
         />
+        <div className="mt-8 flex justify-between items-center">
+          <div className="flex-1 mr-4">
+            {/* <Input
+              isClearable
+              classNames={{
+                base: "w-full sm:max-w-[44%]",
+                inputWrapper: "border-1",
+              }}
+              placeholder="Search by name..."
+              size="sm"
+              startContent={<SearchIcon className="text-default-300" />}
+              value={filterValue}
+              variant="bordered"
+              onClear={() => setFilterValue("")}
+              onValueChange={onSearchChange}
+            /> */}
+          </div>
+          <Button
+            as={Link}
+            className="bg-foreground text-background"
+            endContent={<PlusIcon />}
+            size="sm"
+            href="pegawai/create"
+          >
+            Tambah Data
+          </Button>
+        </div>
       </div>
 
       {/* Tabel */}
@@ -109,8 +140,12 @@ export default function PembayaranTable({ pembayaran }: PembayaranTableProps) {
                 <TableCell>{pembayaran.kodepembayaran}</TableCell>
                 <TableCell>{pembayaran.fullname}</TableCell>
                 <TableCell>{pembayaran.bulangaji}</TableCell>
-                <TableCell>{pembayaran.totalpenerimaan}</TableCell>
-                <TableCell>{pembayaran.totalpotongan}</TableCell>
+                <TableCell>
+                  {formatCurrency(pembayaran.totalpenerimaan)}
+                </TableCell>
+                <TableCell>
+                  {formatCurrency(pembayaran.totalpotongan)}
+                </TableCell>
                 <TableCell>
                   <div className="relative flex items-center gap-2">
                     <Tooltip content="Edit user">
