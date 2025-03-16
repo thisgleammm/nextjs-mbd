@@ -8,9 +8,9 @@ import { getPegawaiById } from "@/lib/data";
 export default async function UpdatePegawaiPage({
   params,
 }: {
-  params: { id: string };
+  params: { id: string }; // Pastikan params adalah objek biasa
 }) {
-  const { id } = await params;
+  const { id } = params; // Hapus await
 
   // Ambil data pegawai
   const pegawai = await getPegawaiById(id);
