@@ -15,10 +15,12 @@ import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import Profile from "./profile";
 import Content from "./content";
+import SignOutButton from "@/components/signout";
 
 export default async function Navbar() {
   const session = await auth();
   const user = session?.user;
+
   return user ? (
     <HeroUINavbar maxWidth="xl" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -28,22 +30,6 @@ export default async function Navbar() {
           </NextLink>
           <Content />
         </NavbarBrand>
-        {/* <ul className="hidden lg:flex gap-4 justify-start ml-2">
-          {siteConfig.navItems.map((item) => (
-            <NavbarItem key={item.href}>
-              <NextLink
-                className={clsx(
-                  linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium"
-                )}
-                color="foreground"
-                href={item.href}
-              >
-                {item.label}
-              </NextLink>
-            </NavbarItem>
-          ))}
-        </ul> */}
       </NavbarContent>
 
       <NavbarContent
@@ -53,8 +39,8 @@ export default async function Navbar() {
         <NavbarItem className="hidden sm:flex gap-2">
           <ThemeSwitch />
           <Profile />
+          <SignOutButton />
         </NavbarItem>
-        <NavbarItem className="hidden md:flex"></NavbarItem>
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
@@ -62,27 +48,21 @@ export default async function Navbar() {
         <NavbarMenuToggle />
       </NavbarContent>
 
-      {/* <NavbarMenu>
-        <div className="mx-4 mt-2 flex flex-col gap-2">
+      <NavbarMenu>
+        <div className="mt-2 flex gap-4">
+          <Profile />
+        </div>
+        <div className="mt-2 flex flex-col items-end gap-4">
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
-              <Link
-                color={
-                  index === 2
-                    ? "primary"
-                    : index === siteConfig.navMenuItems.length - 1
-                      ? "danger"
-                      : "foreground"
-                }
-                href="#"
-                size="lg"
-              >
+              <NextLink href={item.href} className="text-lg">
                 {item.label}
-              </Link>
+              </NextLink>
             </NavbarMenuItem>
           ))}
+          <SignOutButton />
         </div>
-      </NavbarMenu> */}
+      </NavbarMenu>
     </HeroUINavbar>
   ) : (
     <HeroUINavbar maxWidth="xl" position="sticky">
@@ -92,22 +72,6 @@ export default async function Navbar() {
             <p className="font-bold text-inherit">Manajemen Basis Data</p>
           </NextLink>
         </NavbarBrand>
-        {/* <ul className="hidden lg:flex gap-4 justify-start ml-2">
-          {siteConfig.navItems.map((item) => (
-            <NavbarItem key={item.href}>
-              <NextLink
-                className={clsx(
-                  linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium"
-                )}
-                color="foreground"
-                href={item.href}
-              >
-                {item.label}
-              </NextLink>
-            </NavbarItem>
-          ))}
-        </ul> */}
       </NavbarContent>
 
       <NavbarContent
@@ -118,7 +82,6 @@ export default async function Navbar() {
           <ThemeSwitch />
           <Profile />
         </NavbarItem>
-        <NavbarItem className="hidden md:flex"></NavbarItem>
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
@@ -126,27 +89,11 @@ export default async function Navbar() {
         <NavbarMenuToggle />
       </NavbarContent>
 
-      {/* <NavbarMenu>
-        <div className="mx-4 mt-2 flex flex-col gap-2">
-          {siteConfig.navMenuItems.map((item, index) => (
-            <NavbarMenuItem key={`${item}-${index}`}>
-              <Link
-                color={
-                  index === 2
-                    ? "primary"
-                    : index === siteConfig.navMenuItems.length - 1
-                      ? "danger"
-                      : "foreground"
-                }
-                href="#"
-                size="lg"
-              >
-                {item.label}
-              </Link>
-            </NavbarMenuItem>
-          ))}
+      <NavbarMenu>
+        <div className="mt-2 flex flex-col items-end">
+          <Profile />
         </div>
-      </NavbarMenu> */}
+      </NavbarMenu>
     </HeroUINavbar>
   );
 }

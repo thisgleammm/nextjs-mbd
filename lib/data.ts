@@ -11,9 +11,32 @@ export const getPegawai = async () => {
 
 export const getPembayaran = async () => {
   try {
-    const pembayaran = await prisma.pembayaran.findMany();
-    return pembayaran;
+    const pembayaran = await prisma.pembayaran.findMany({
+      include: {
+        pegawai: {
+          select: {
+            fullname: true,
+          },
+        },
+      },
+    });
+
+    const formattedPembayaran = pembayaran.map((item) => ({
+      ...item,
+      fullname: item.pegawai?.fullname || "N/A",
+    }));
+
+    return formattedPembayaran;
   } catch (error) {
     throw new Error("Failed to fetch pembayaran data");
+  }
+};
+
+export const getPendapatan = async () => {
+  try {
+    const pendapatan = await prisma.pendapatan.findMany();
+    return pendapatan;
+  } catch (error) {
+    throw new Error("Failed to fetch pendapatan data");
   }
 };

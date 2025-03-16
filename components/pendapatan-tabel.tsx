@@ -15,34 +15,31 @@ import { useAsyncList } from "@react-stately/data";
 import { Spinner } from "@heroui/spinner";
 import SplitText from "@/components/splittext";
 
-interface Pembayaran {
-  kodepembayaran: string;
-  fullname: string;
-  bulangaji: string;
-  totalpenerimaan: number;
-  totalpotongan: number;
+interface Pendapatan {
+  kodependapatan: string;
+  jenispendapatan: string | null;
 }
 
-interface PembayaranTableProps {
-  pembayaran: Pembayaran[];
+interface PendapatanTableProps {
+  pendapatan: Pendapatan[];
 }
 
-export default function PembayaranTable({ pembayaran }: PembayaranTableProps) {
+export default function PendapatanTable({ pendapatan }: PendapatanTableProps) {
   const [isLoading, setIsLoading] = React.useState(true);
 
   let list = useAsyncList({
     async load({ signal }) {
       setIsLoading(false);
       return {
-        items: pembayaran,
+        items: pendapatan,
       };
     },
     async sort({ items, sortDescriptor }) {
       return {
-        items: (items as Pembayaran[]).sort((a: Pembayaran, b: Pembayaran) => {
+        items: (items as Pendapatan[]).sort((a: Pendapatan, b: Pendapatan) => {
           // Berikan tipe eksplisit di sini
-          let first = a[sortDescriptor.column as keyof Pembayaran]; // Gunakan keyof Pegawai
-          let second = b[sortDescriptor.column as keyof Pembayaran]; // Gunakan keyof Pegawai
+          let first = a[sortDescriptor.column as keyof Pendapatan];
+          let second = b[sortDescriptor.column as keyof Pendapatan];
           let cmp =
             (parseInt(first as string) || first || "") <
             (parseInt(second as string) || second || "")
@@ -64,7 +61,7 @@ export default function PembayaranTable({ pembayaran }: PembayaranTableProps) {
       {/* Headline/Judul Tabel */}
       <div className="w-full text-center mb-8">
         <SplitText
-          text="Tabel Pembayaran"
+          text="Tabel Pendapatan"
           className="text-6xl font-semibold"
           delay={20}
           animationFrom={{ opacity: 0, transform: "translate3d(0,50px,0)" }}
@@ -77,40 +74,30 @@ export default function PembayaranTable({ pembayaran }: PembayaranTableProps) {
       {/* Tabel */}
       <div className="w-full">
         <Table
-          aria-label="Tabel Data Pembayaran"
+          aria-label="Tabel Data Pendapatan"
           sortDescriptor={list.sortDescriptor}
           onSortChange={list.sort}
         >
           <TableHeader>
-            <TableColumn key="kodepembayaran" allowsSorting>
-              Kode Pembayaran
+            <TableColumn key="kodependapatan" allowsSorting>
+              Kode Pendapatan
             </TableColumn>
-            <TableColumn key="fullname" allowsSorting>
-              Nama Pegawai
-            </TableColumn>
-            <TableColumn>Bulan Gaji</TableColumn>
-            <TableColumn key="totalpenerimaan" allowsSorting>
-              Total Penerimaan
-            </TableColumn>
-            <TableColumn key="totalpotongan" allowsSorting>
-              Total Potongan
+            <TableColumn key="jenispendapatan" allowsSorting>
+              Jenis Pendapatan
             </TableColumn>
             <TableColumn>Aksi</TableColumn>
           </TableHeader>
           <TableBody
             isLoading={isLoading}
-            items={list.items as Pembayaran[]}
+            items={list.items as Pendapatan[]}
             loadingContent={<Spinner label="Loading..." />}
           >
             {(
-              pembayaran: Pembayaran // Berikan tipe eksplisit di sini
+              pendapatan: Pendapatan // Berikan tipe eksplisit di sini
             ) => (
-              <TableRow key={pembayaran.kodepembayaran}>
-                <TableCell>{pembayaran.kodepembayaran}</TableCell>
-                <TableCell>{pembayaran.fullname}</TableCell>
-                <TableCell>{pembayaran.bulangaji}</TableCell>
-                <TableCell>{pembayaran.totalpenerimaan}</TableCell>
-                <TableCell>{pembayaran.totalpotongan}</TableCell>
+              <TableRow key={pendapatan.kodependapatan}>
+                <TableCell>{pendapatan.kodependapatan}</TableCell>
+                <TableCell>{pendapatan.jenispendapatan}</TableCell>
                 <TableCell>
                   <div className="relative flex items-center gap-2">
                     <Tooltip content="Edit user">

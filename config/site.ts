@@ -14,5 +14,21 @@ export const siteConfig = {
       label: "Home",
       href: "/",
     },
+    {
+      label: "Dashboard",
+      href: "/dashboard",
+    },
+    {
+      label: "Pegawai",
+      href: "/pegawai",
+    },
+    {
+      label: "Pendapatan",
+      href: "/pendapatan",
+    },
+    {
+      label: "Pembayaran",
+      href: "/pembayaran",
+    },
   ],
 };

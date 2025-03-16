@@ -14,6 +14,7 @@ import { EditIcon, DeleteIcon } from "@/components/icons";
 import { Chip, ChipProps } from "@heroui/chip";
 import { useAsyncList } from "@react-stately/data";
 import { Spinner } from "@heroui/spinner";
+import SplitText from "@/components/splittext";
 
 interface Pegawai {
   nip: string;
@@ -67,72 +68,86 @@ export default function PegawaiTable({ pegawai }: PegawaiTableProps) {
   });
 
   return (
-    <Table
-      aria-label="Tabel Data Pegawai"
-      sortDescriptor={list.sortDescriptor}
-      onSortChange={list.sort}
-    >
-      <TableHeader>
-        <TableColumn key="nip" allowsSorting>
-          NIP
-        </TableColumn>
-        <TableColumn key="fullname" allowsSorting>
-          Nama Lengkap
-        </TableColumn>
-        <TableColumn>Jabatan dan Pangkat</TableColumn>
-        <TableColumn key="statuspegawai" allowsSorting>
-          Status
-        </TableColumn>
-        <TableColumn>Aksi</TableColumn>
-      </TableHeader>
-      <TableBody
-        isLoading={isLoading}
-        items={list.items as Pegawai[]}
-        loadingContent={<Spinner label="Loading..." />}
+    <div className="flex flex-col items-center w-full">
+      <div className="w-full text-center mb-8">
+        <SplitText
+          text="Tabel Pegawai"
+          className="text-6xl font-semibold"
+          delay={20}
+          animationFrom={{ opacity: 0, transform: "translate3d(0,50px,0)" }}
+          animationTo={{ opacity: 1, transform: "translate3d(0,0,0)" }}
+          threshold={0.2}
+          rootMargin="-50px"
+        />
+      </div>
+
+      <Table
+        aria-label="Tabel Data Pegawai"
+        sortDescriptor={list.sortDescriptor}
+        onSortChange={list.sort}
       >
-        {(
-          pegawai: Pegawai // Berikan tipe eksplisit di sini
-        ) => (
-          <TableRow key={pegawai.nip}>
-            <TableCell>{pegawai.nip}</TableCell>
-            <TableCell>{pegawai.fullname}</TableCell>
-            <TableCell>
-              <div className="flex flex-col">
-                <p className="text-bold text-sm capitalize">
-                  {pegawai.jabatan}
-                </p>
-                <p className="text-bold text-sm capitalize text-default-400">
-                  {pegawai.pangkat}
-                </p>
-              </div>
-            </TableCell>
-            <TableCell>
-              <Chip
-                className="capitalize"
-                color={statusColorMap[pegawai.statuspegawai]}
-                size="sm"
-                variant="flat"
-              >
-                {pegawai.statuspegawai}
-              </Chip>
-            </TableCell>
-            <TableCell>
-              <div className="relative flex items-center gap-2">
-                <Tooltip content="Edit user">
-                  <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                    <EditIcon />
-                  </span>
-                </Tooltip>
-                <Tooltip color="danger" content="Delete user">
-                  <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                    <DeleteIcon />
-                  </span>
-                </Tooltip>
-              </div>
-            </TableCell>
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+        <TableHeader>
+          <TableColumn key="nip" allowsSorting>
+            NIP
+          </TableColumn>
+          <TableColumn key="fullname" allowsSorting>
+            Nama Lengkap
+          </TableColumn>
+          <TableColumn>Jabatan dan Pangkat</TableColumn>
+          <TableColumn key="statuspegawai" allowsSorting>
+            Status
+          </TableColumn>
+          <TableColumn>Aksi</TableColumn>
+        </TableHeader>
+        <TableBody
+          isLoading={isLoading}
+          items={list.items as Pegawai[]}
+          loadingContent={<Spinner label="Loading..." />}
+        >
+          {(
+            pegawai: Pegawai // Berikan tipe eksplisit di sini
+          ) => (
+            <TableRow key={pegawai.nip}>
+              <TableCell>{pegawai.nip}</TableCell>
+              <TableCell>{pegawai.fullname}</TableCell>
+              <TableCell>
+                <div className="flex flex-col">
+                  <p className="text-bold text-sm capitalize">
+                    {pegawai.jabatan}
+                  </p>
+                  <p className="text-bold text-sm capitalize text-default-400">
+                    {pegawai.pangkat}
+                  </p>
+                </div>
+              </TableCell>
+              <TableCell>
+                <Chip
+                  className="capitalize"
+                  color={statusColorMap[pegawai.statuspegawai]}
+                  size="sm"
+                  variant="flat"
+                >
+                  {pegawai.statuspegawai}
+                </Chip>
+              </TableCell>
+              <TableCell>
+                <div className="relative flex items-center gap-2">
+                  <Tooltip content="Edit user">
+                    <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                      <EditIcon />
+                    </span>
+                  </Tooltip>
+                  <Tooltip color="danger" content="Delete user">
+                    <span className="text-lg text-danger cursor-pointer active:opacity-50">
+                      <DeleteIcon />
+                    </span>
+                  </Tooltip>
+                </div>
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </div>
   );
 }
