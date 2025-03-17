@@ -17,11 +17,7 @@ import SplitText from "@/components/splittext";
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
 import { Link } from "@heroui/link";
-
-interface Pendapatan {
-  kodependapatan: string;
-  jenispendapatan: string;
-}
+import type { Pendapatan } from "@prisma/client";
 
 interface PendapatanTableProps {
   pendapatan: Pendapatan[];
