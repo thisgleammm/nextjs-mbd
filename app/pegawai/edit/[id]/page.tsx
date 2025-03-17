@@ -5,12 +5,11 @@ import { auth } from "@/auth";
 import { redirect, notFound } from "next/navigation";
 import { getPegawaiById } from "@/lib/data";
 
-export default async function UpdatePegawaiPage({
-  params,
-}: {
-  params: { id: string }; // Pastikan params adalah objek biasa
-}) {
-  const { id } = params; // Hapus await
+type Params = Promise<{ id: string }>
+
+export default async function UpdatePegawaiPage(props: { params: Params }) {
+  const params = await props.params;
+  const id = params.id;
 
   // Ambil data pegawai
   const pegawai = await getPegawaiById(id);
