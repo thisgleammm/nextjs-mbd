@@ -24,7 +24,6 @@
     "@heroui/theme": "2.4.12",
     "@neondatabase/serverless": "^0.10.4",
     "@prisma/client": "^6.5.0",
-    "@prisma/instrumentation": "^6.5.0",
     "@react-aria/ssr": "3.9.7",
     "@react-aria/visually-hidden": "3.8.20",
     "@react-spring/web": "^9.7.5",
@@ -42,7 +41,6 @@
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "15.0.4",
-    "@prisma/extension-optimize": "^1.1.8",
     "@react-types/shared": "3.25.0",
     "@types/node": "20.5.7",
     "@types/react": "18.3.3",
