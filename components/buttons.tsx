@@ -67,8 +67,9 @@ export const SubmitButton = ({
     <Button
       type="submit"
       variant="flat"
+      className="bg-foreground text-background"
       disabled={pending}
-      onClick={handleClick} // Tambahkan onClick
+      onPress={handleClick}
     >
       {label === "save"
         ? pending

@@ -18,13 +18,12 @@ export const unitkerja = [{ key: "PT KAI", label: "PT KAI" }];
 export default function UpdateForm({ pegawai }: { pegawai: Pegawai }) {
   const UpdatePegawaiWithId = updatePegawai.bind(null, pegawai.nip);
   const [state, formAction] = useActionState(UpdatePegawaiWithId, null);
-  const router = useRouter();
 
-  // const handleSubmitSuccess = () => {
-  //   // Refresh halaman untuk memperbarui data
-  //   router.push("/pegawai");
-  //   router.refresh();
-  // };
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Hapus karakter non-angka dari nilai input
+    const value = e.target.value.replace(/\D/g, ""); // \D berarti non-digit
+    e.target.value = value; // Set nilai input ke nilai yang sudah difilter
+  };
 
   return (
     <Form className="w-full max-w-xs flex flex-col gap-3" action={formAction}>
@@ -52,6 +51,8 @@ export default function UpdateForm({ pegawai }: { pegawai: Pegawai }) {
         name="nokpj"
         placeholder="Masukkan No KPJ"
         defaultValue={pegawai.nokpj}
+        type="number" // Gunakan type="number" untuk input angka
+        onChange={handleInputChange} // Tambahkan event handler
       />
       <Input
         isRequired
@@ -60,6 +61,7 @@ export default function UpdateForm({ pegawai }: { pegawai: Pegawai }) {
         name="nonpwp"
         placeholder="Masukkan No NPWP"
         defaultValue={pegawai.nonpwp}
+        onChange={handleInputChange} // Tambahkan event handler
       />
       <Input
         isRequired
