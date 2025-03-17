@@ -1,18 +1,18 @@
 import React from "react";
 import SplitText from "@/components/splittext";
-import UpdateForm from "@/components/ubahpegawai";
+import UpdateForm from "@/components/ubahpendapatan";
 import { auth } from "@/auth";
 import { redirect, notFound } from "next/navigation";
-import { getPegawaiById } from "@/lib/data";
+import { getPendapatanById } from "@/lib/data";
 
-type Params = Promise<{ id: string }>
+type Params = Promise<{ id: string }>;
 
-export default async function UpdatePegawaiPage(props: { params: Params }) {
+export default async function UpdatePendapatanPage(props: { params: Params }) {
   const params = await props.params;
   const id = params.id;
 
-  const pegawai = await getPegawaiById(id);
-  if (!pegawai) {
+  const pendapatan = await getPendapatanById(id);
+  if (!pendapatan) {
     notFound();
   }
 
@@ -26,7 +26,7 @@ export default async function UpdatePegawaiPage(props: { params: Params }) {
     <div className="flex flex-col items-center w-full">
       <div className="w-full text-center mb-8">
         <SplitText
-          text="Ubah Pegawai"
+          text="Ubah Pendapatan"
           className="text-6xl font-semibold"
           delay={20}
           animationFrom={{ opacity: 0, transform: "translate3d(0,50px,0)" }}
@@ -36,7 +36,7 @@ export default async function UpdatePegawaiPage(props: { params: Params }) {
         />
       </div>
       <div className="flex justify-center w-full">
-        <UpdateForm pegawai={pegawai} />
+        <UpdateForm pendapatan={pendapatan} />
       </div>
     </div>
   );

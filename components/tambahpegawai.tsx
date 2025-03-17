@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Form, Input, Select, SelectItem, NumberInput } from "@heroui/react";
+import { Form, Input, Select, SelectItem } from "@heroui/react";
 import { savePegawai } from "@/lib/actions";
 import { useActionState } from "react";
 import { SubmitButton } from "@/components/buttons";
@@ -42,8 +42,8 @@ export default function CreateForm() {
         labelPlacement="outside"
         name="nip"
         placeholder="Masukkan NIP"
-        type="number" // Gunakan type="number" untuk input angka
         onChange={handleInputChange} // Tambahkan event handler
+        maxLength={10} // Batasi panjang input hingga 10 karakter
       />
       <Input
         isRequired
@@ -58,8 +58,8 @@ export default function CreateForm() {
         labelPlacement="outside"
         name="nokpj"
         placeholder="Masukkan No KPJ"
-        type="number" // Gunakan type="number" untuk input angka
         onChange={handleInputChange} // Tambahkan event handler
+        maxLength={7} // Batasi panjang input hingga 7 karakter
       />
       <Input
         isRequired
@@ -67,8 +67,8 @@ export default function CreateForm() {
         labelPlacement="outside"
         name="nonpwp"
         placeholder="Masukkan No NPWP"
-        type="number" // Gunakan type="number" untuk input angka
         onChange={handleInputChange} // Tambahkan event handler
+        maxLength={16} // Batasi panjang input hingga 16 karakter
       />
       <Input
         isRequired
@@ -76,6 +76,7 @@ export default function CreateForm() {
         labelPlacement="outside"
         name="jabatan"
         placeholder="Masukkan Jabatan"
+        maxLength={25}
       />
       <Input
         isRequired
@@ -83,6 +84,7 @@ export default function CreateForm() {
         labelPlacement="outside"
         name="pangkat"
         placeholder="Masukkan Pangkat"
+        maxLength={50}
       />
       <Select
         isRequired

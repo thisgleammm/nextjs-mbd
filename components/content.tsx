@@ -39,19 +39,6 @@ export default function Content() {
           Pegawai
         </NextLink>
       </NavbarItem>
-      <NavbarItem isActive={pathname === "/pembayaran"}>
-        <NextLink
-          className={clsx(
-            linkStyles({
-              color: pathname === "/pembayaran" ? "secondary" : "foreground",
-            }),
-            "data-[active=true]:text-primary data-[active=true]:font-medium"
-          )}
-          href="/pembayaran"
-        >
-          Pembayaran
-        </NextLink>
-      </NavbarItem>
       <NavbarItem isActive={pathname === "/pendapatan"}>
         <NextLink
           className={clsx(
@@ -63,6 +50,19 @@ export default function Content() {
           href="/pendapatan"
         >
           Pendapatan
+        </NextLink>
+      </NavbarItem>
+      <NavbarItem isActive={pathname === "/pembayaran"}>
+        <NextLink
+          className={clsx(
+            linkStyles({
+              color: pathname === "/pembayaran" ? "secondary" : "foreground",
+            }),
+            "data-[active=true]:text-primary data-[active=true]:font-medium"
+          )}
+          href="/pembayaran"
+        >
+          Pembayaran
         </NextLink>
       </NavbarItem>
     </ul>

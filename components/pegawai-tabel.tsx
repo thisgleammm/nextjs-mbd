@@ -9,17 +9,14 @@ import {
   TableRow,
   TableCell,
 } from "@heroui/table";
-import { Tooltip } from "@heroui/tooltip";
-import { DeleteIcon, PlusIcon, SearchIcon } from "@/components/icons";
+import { PlusIcon } from "@/components/icons";
 import { Chip, ChipProps } from "@heroui/chip";
 import { useAsyncList } from "@react-stately/data";
 import { Spinner } from "@heroui/spinner";
 import SplitText from "@/components/splittext";
 import { Button } from "@heroui/button";
-import { Input } from "@heroui/input";
 import { Link } from "@heroui/link";
-import { DeleteButton, EditButton } from "@/components/buttons";
-import { useRouter } from "next/navigation";
+import { DeleteButtonPegawai, EditButtonPegawai } from "@/components/buttons";
 import { Pegawai } from "@prisma/client";
 
 interface PegawaiTableProps {
@@ -154,8 +151,8 @@ export default function PegawaiTable({ pegawai }: PegawaiTableProps) {
               </TableCell>
               <TableCell>
                 <div className="relative flex items-center gap-2">
-                  <EditButton id={pegawai.nip} />
-                  <DeleteButton id={pegawai.nip} />
+                  <EditButtonPegawai id={pegawai.nip} />
+                  <DeleteButtonPegawai id={pegawai.nip} />
                 </div>
               </TableCell>
             </TableRow>

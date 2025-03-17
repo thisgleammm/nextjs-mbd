@@ -51,8 +51,8 @@ export default function UpdateForm({ pegawai }: { pegawai: Pegawai }) {
         name="nokpj"
         placeholder="Masukkan No KPJ"
         defaultValue={pegawai.nokpj}
-        type="number" // Gunakan type="number" untuk input angka
         onChange={handleInputChange} // Tambahkan event handler
+        maxLength={7} // Batasi panjang input hingga 7 karakter
       />
       <Input
         isRequired
@@ -62,6 +62,7 @@ export default function UpdateForm({ pegawai }: { pegawai: Pegawai }) {
         placeholder="Masukkan No NPWP"
         defaultValue={pegawai.nonpwp}
         onChange={handleInputChange} // Tambahkan event handler
+        maxLength={16} // Batasi panjang input hingga 16 karakter
       />
       <Input
         isRequired
@@ -70,6 +71,7 @@ export default function UpdateForm({ pegawai }: { pegawai: Pegawai }) {
         name="jabatan"
         placeholder="Masukkan Jabatan"
         defaultValue={pegawai.jabatan}
+        maxLength={25}
       />
       <Input
         isRequired
@@ -78,6 +80,7 @@ export default function UpdateForm({ pegawai }: { pegawai: Pegawai }) {
         name="pangkat"
         placeholder="Masukkan Pangkat"
         defaultValue={pegawai.pangkat}
+        maxLength={50}
       />
       <Select
         isRequired

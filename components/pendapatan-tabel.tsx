@@ -9,14 +9,16 @@ import {
   TableRow,
   TableCell,
 } from "@heroui/table";
-import { Tooltip } from "@heroui/tooltip";
-import { EditIcon, DeleteIcon, PlusIcon, SearchIcon } from "@/components/icons";
+import { PlusIcon } from "@/components/icons";
 import { useAsyncList } from "@react-stately/data";
 import { Spinner } from "@heroui/spinner";
 import SplitText from "@/components/splittext";
 import { Button } from "@heroui/button";
-import { Input } from "@heroui/input";
 import { Link } from "@heroui/link";
+import {
+  DeleteButtonPendapatan,
+  EditButtonPendapatan,
+} from "@/components/buttons";
 import type { Pendapatan } from "@prisma/client";
 
 interface PendapatanTableProps {
@@ -90,7 +92,7 @@ export default function PendapatanTable({ pendapatan }: PendapatanTableProps) {
             className="bg-foreground text-background"
             endContent={<PlusIcon />}
             size="sm"
-            href="pegawai/create"
+            href="pendapatan/create"
           >
             Tambah Data
           </Button>
@@ -126,16 +128,8 @@ export default function PendapatanTable({ pendapatan }: PendapatanTableProps) {
                 <TableCell>{pendapatan.jenispendapatan}</TableCell>
                 <TableCell>
                   <div className="relative flex items-center gap-2">
-                    <Tooltip content="Edit user">
-                      <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                        <EditIcon />
-                      </span>
-                    </Tooltip>
-                    <Tooltip color="danger" content="Delete user">
-                      <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                        <DeleteIcon />
-                      </span>
-                    </Tooltip>
+                    <EditButtonPendapatan id={pendapatan.kodependapatan} />
+                    <DeleteButtonPendapatan id={pendapatan.kodependapatan} />
                   </div>
                 </TableCell>
               </TableRow>

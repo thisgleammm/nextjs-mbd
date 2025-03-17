@@ -18,6 +18,7 @@ import { formatCurrency } from "@/lib/utils";
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
 import { Link } from "@heroui/link";
+import { EditButtonPembayaran, DeleteButtonPembayaran } from "./buttons";
 
 interface Pembayaran {
   kodepembayaran: string;
@@ -45,8 +46,8 @@ export default function PembayaranTable({ pembayaran }: PembayaranTableProps) {
       return {
         items: (items as Pembayaran[]).sort((a: Pembayaran, b: Pembayaran) => {
           // Berikan tipe eksplisit di sini
-          let first = a[sortDescriptor.column as keyof Pembayaran]; // Gunakan keyof Pegawai
-          let second = b[sortDescriptor.column as keyof Pembayaran]; // Gunakan keyof Pegawai
+          let first = a[sortDescriptor.column as keyof Pembayaran];
+          let second = b[sortDescriptor.column as keyof Pembayaran];
           let cmp =
             (parseInt(first as string) || first || "") <
             (parseInt(second as string) || second || "")
@@ -98,7 +99,7 @@ export default function PembayaranTable({ pembayaran }: PembayaranTableProps) {
             className="bg-foreground text-background"
             endContent={<PlusIcon />}
             size="sm"
-            href="pegawai/create"
+            href="pembayaran/create"
           >
             Tambah Data
           </Button>
@@ -148,16 +149,8 @@ export default function PembayaranTable({ pembayaran }: PembayaranTableProps) {
                 </TableCell>
                 <TableCell>
                   <div className="relative flex items-center gap-2">
-                    <Tooltip content="Edit user">
-                      <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                        <EditIcon />
-                      </span>
-                    </Tooltip>
-                    <Tooltip color="danger" content="Delete user">
-                      <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                        <DeleteIcon />
-                      </span>
-                    </Tooltip>
+                    <EditButtonPembayaran id={pembayaran.kodepembayaran} />
+                    <DeleteButtonPembayaran id={pembayaran.kodepembayaran} />
                   </div>
                 </TableCell>
               </TableRow>
